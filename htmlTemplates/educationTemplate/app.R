@@ -1,6 +1,16 @@
 palette(c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3",
           "#FF7F00", "#FFFF33", "#A65628", "#F781BF", "#999999"))
 
+ui <- htmlTemplate(
+  
+  filename = "index.html",
+  plot1 = plotOutput('plot1'),
+  xcol = selectInput('xcol', 'X Variable', names(iris)),
+  ycol = selectInput('ycol', 'Y Variable', names(iris), selected=names(iris)[[2]]),
+  clus = numericInput('clusters', 'Cluster count', 3, min = 1, max = 9)
+
+  )
+
 server <- shinyServer(function(input, output, session) {
   
   selectedData <- reactive({
@@ -21,11 +31,5 @@ server <- shinyServer(function(input, output, session) {
   
 })
 
-ui <- htmlTemplate(filename = "index.html",
-                   xcol = selectInput('xcol', 'X Variable', names(iris)),
-                   ycol = selectInput('ycol', 'Y Variable', names(iris), selected=names(iris)[[2]]),
-                   clus = numericInput('clusters', 'Cluster count', 3, min = 1, max = 9),
-                   plot1 = plotOutput('plot1')
-)
 
 shinyApp(ui = ui, server = server)

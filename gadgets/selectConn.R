@@ -13,7 +13,7 @@ selectConn <- function() {
       verbatimTextOutput("selectedPort"),
       textInput('database', 'Database', 'airontime', width='100%'),
       textInput('uid', 'User ID', c('rstudioadmin'), width='100%'),
-      passwordInput("pwd", "Password", 'ABCd4321', width='100%')
+      passwordInput("pwd", "Password", '', width='100%')
     )
   )
 
@@ -71,7 +71,4 @@ selectConn <- function() {
 }
 
 ### Connect
-library(RODBC)
-ch <- odbcDriverConnect(selectConn())
-res <- sqlQuery(ch, 'select * from airport')
-res
+selectConn()

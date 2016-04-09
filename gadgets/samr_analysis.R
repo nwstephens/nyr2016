@@ -2,7 +2,7 @@
 ### Significance analysis of microarrays
 ############################################################
 
-datadir <- '~/nyr-2016/gadgets'
+datadir <- '/Users/nwstephens/Projects/presentations/NYR2016/repos/nyr2016/gadgets'
 source(file.path(datadir, 'samr_gadget.R'))
 
 ### Model
@@ -14,7 +14,6 @@ delta = 0.4
 samr.plot(modelout, 0.4)
 
 ### Other effects
-dat$y <- rep(1:2, each = 4)
 dat$y <- rep(1:2, times = 4)
 dat$y <- rep(1:2, each = 2, times = 2)
 

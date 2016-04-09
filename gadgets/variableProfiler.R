@@ -9,7 +9,7 @@ variableProfiler <- function()
   if (length(objects) == 0)
     stop("No objects found. Please create a data.frame to continue", call. = FALSE)
   dataChoices <- objects[sapply(objects, function(x) is.data.frame(get(x)))]
-  #dataChoices <- c('iris','mtcars','cars')
+  dataChoices <- c('iris','mtcars','cars')
 
   ui <- miniPage(
     gadgetTitleBar("Variable Profiler"),
@@ -125,11 +125,11 @@ variableProfiler <- function()
       validate(need(!is.null(vec()), "No data found"))
       title1 <- paste(ifelse(input$logscale,'Log 10', ''), input$colSelect)
       if(vclass() == 'quant') {
-        p1 <- qplot(vec(), geom = 'histogram', bins=15)
+        p1 <- qplot(vec(), geom = 'histogram', bins = 15, color = I('white'), fill = I('cornflowerblue'))
         if(input$trim) p1 <- p1 +
             geom_vline(xintercept = c(input$min, input$max), col = 'tomato')
       }
-      if(vclass() == 'cat') p1 <- qplot(vec(), geom = 'bar')
+      if(vclass() == 'cat') p1 <- qplot(vec(), geom = 'bar', fill = factor(vec()))
       p1 + ggtitle(title1) + xlab('')
     })
 
@@ -155,6 +155,10 @@ variableProfiler <- function()
       x <- out$filters[!duplicated(out$filters)]
       stopApp(x)
     })
+    
+    observeEvent(input$cancel, {
+      invisible(stopApp())
+    })
 
   }
 
@@ -163,10 +167,6 @@ variableProfiler <- function()
 }
 
 ### Profile variables for varias data sets
-
-iris <- iris
-mtcars <- mtcars
-cars <- cars
 
 filters <- variableProfiler()
 filters

@@ -69,6 +69,9 @@ runmodel <- function(data, w = "95%"){
       )
       stopApp(modelout)
     })
+    observeEvent(input$cancel, {
+      invisible(stopApp())
+    })
   }
   
   runGadget(ui, server, viewer = dialogViewer('Significance Analysis of Microarrays', 600, 400))
